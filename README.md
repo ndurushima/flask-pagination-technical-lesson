@@ -25,7 +25,9 @@ To get started:
 ```bash
 pipenv install && pipenv shell
 cd server
-flask db upgrade
+flask db init
+flask db migrate -m "initial migration"
+flask db upgrade head
 python seed.py
 python app.py
 ```

@@ -110,6 +110,26 @@ return {
 }, 200
 ```
 
+Your full code solution should look like:
+
+```python
+class Recipes(Resource):
+    def get(self):
+        page = request.args.get("page", 1, type=int)
+        per_page = request.args.get("per_page", 5, type=int)
+
+        pagination = Recipe.query.paginate(page=page, per_page=per_page, error_out=False)
+        recipes = pagination.items
+
+        return {
+            "page": page,
+            "per_page": per_page,
+            "total": pagination.total,
+            "total_pages": pagination.pages,
+            "items": [RecipeSchema().dump(recipe) for recipe in recipes]
+        }, 200
+```
+
 #### Step 4: Test in Browser or Postman
 
 Try endpoints like:
